@@ -37,13 +37,16 @@ func NextBoolean(generator *BoolGenerator) bool {
 	return NextBit(generator) == 1
 }
 
-// Generates a new BoolGenerator.
-func New() *BoolGenerator {
-	src := rand.NewSource(time.Now().UnixNano())
-
+// Generates a new BoolGenerator using the given rand.Source.
+func NewFromSrc(src rand.Source) *BoolGenerator {
 	return &BoolGenerator{
 		src: src,
 		cache: src.Int63(),
 		remainingBits: 63,
 	}
+}
+
+// Generates a new BoolGenerator using a rand.Source from the current UNIX time.
+func New() *BoolGenerator {
+	return NewFromSrc(rand.NewSource(time.Now().UnixNano()))
 }
