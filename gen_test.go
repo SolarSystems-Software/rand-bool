@@ -10,7 +10,7 @@ func TestGeneration(test *testing.T) {
 	src := rand.NewSource(1)
 	gen := randbool.NewFromSrc(src)
 
-	if randbool.NextBoolean(gen) || !randbool.NextBoolean(gen) || randbool.NextBoolean(gen) {
+	if gen.NextBoolean() || !gen.NextBoolean() || gen.NextBoolean() {
 		test.Error("Bad booleans")
 	}
 }

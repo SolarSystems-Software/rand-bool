@@ -13,7 +13,7 @@ type BoolGenerator struct {
 }
 
 // Gets the next bit in the specified BoolGenerator.
-func NextBit(generator *BoolGenerator) uint8 {
+func (generator *BoolGenerator) NextBit() uint8 {
 	// If there's no bits left, reset
 	if generator.remainingBits == 0 {
 		generator.cache = generator.src.Int63()
@@ -33,8 +33,8 @@ func NextBit(generator *BoolGenerator) uint8 {
 }
 
 // Gets the next boolean in the specified BoolGenerator.
-func NextBoolean(generator *BoolGenerator) bool {
-	return NextBit(generator) == 1
+func (generator *BoolGenerator) NextBoolean() bool {
+	return generator.NextBit() == 1
 }
 
 // Generates a new BoolGenerator using the given rand.Source.
