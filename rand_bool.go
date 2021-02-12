@@ -12,6 +12,11 @@ type BoolGenerator struct {
 	remainingBits int
 }
 
+// The default implementation, which can be used.
+var Default = &BoolGenerator{
+	src: rand.NewSource(int64(CryptoRandOrPanic())),
+}
+
 // Gets the next bit in the specified BoolGenerator.
 func (generator *BoolGenerator) NextBit() uint8 {
 	// If there's no bits left, reset
