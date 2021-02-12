@@ -2,11 +2,14 @@ package randbool
 
 import (
 	"math/rand"
+	"sync"
 	"time"
 )
 
 // Represents a generator. Used to generate random bits.
 type BoolGenerator struct {
+	sync.Mutex
+
 	src rand.Source
 	cache int64
 	remainingBits int
@@ -19,6 +22,10 @@ var Default = &BoolGenerator{
 
 // Gets the next bit in the specified BoolGenerator.
 func (generator *BoolGenerator) NextBit() uint8 {
+	// concurrency safety
+	generator.Lock()
+	defer generator.Unlock()
+
 	// If there's no bits left, reset
 	if generator.remainingBits == 0 {
 		generator.cache = generator.src.Int63()
