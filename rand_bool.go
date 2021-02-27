@@ -15,9 +15,7 @@ type BoolGenerator struct {
 }
 
 // The default implementation, which can be used.
-var Default = &BoolGenerator{
-	src: rand.NewSource(int64(CryptoRandOrPanic())),
-}
+var Default = New()
 
 // Gets the next bit in the specified BoolGenerator.
 func (generator *BoolGenerator) NextBit() uint8 {
