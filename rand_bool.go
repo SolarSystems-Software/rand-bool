@@ -3,7 +3,6 @@ package randbool
 import (
 	"math/rand"
 	"sync"
-	"time"
 )
 
 // Represents a generator. Used to generate random bits.
@@ -60,5 +59,5 @@ func NewFromSrc(src rand.Source) *BoolGenerator {
 
 // Generates a new BoolGenerator using a rand.Source from the current UNIX time.
 func New() *BoolGenerator {
-	return NewFromSrc(rand.NewSource(time.Now().UnixNano()))
+	return NewFromSrc(rand.NewSource(int64(CryptoRandOrPanic())))
 }
