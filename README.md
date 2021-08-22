@@ -7,7 +7,7 @@ These examples use a new generator, but the same generator should be used in rea
 ### Generating random booleans
 ```
 generator := randbool.New()
-randBoolean := randbool.NextBoolean(generator)
+randBoolean := randbool.NextBool(generator)
 
 if randBoolean {
     // etc...
