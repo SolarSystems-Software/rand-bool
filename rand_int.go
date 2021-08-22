@@ -5,7 +5,8 @@ import (
 	"encoding/binary"
 )
 
-// Generates a cryptographically random unsigned 64-bit integer.
+// CryptoRand generates a cryptographically secure unsigned 64-bit integer.
+// The error returned is non-nil if an error occurred.
 func CryptoRand() (uint64, error) {
 	var bytes [8]byte
 
@@ -16,7 +17,7 @@ func CryptoRand() (uint64, error) {
 	return binary.LittleEndian.Uint64(bytes[:]), nil
 }
 
-// Same as CryptoRand but panics if it encounters an error.
+// CryptoRandOrPanic calls CryptoRand, but panics if err != nil.
 func CryptoRandOrPanic() uint64 {
 	i, err := CryptoRand()
 	if err != nil {

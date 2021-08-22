@@ -5,19 +5,20 @@ import (
 	"sync"
 )
 
-// Represents a generator. Used to generate random bits.
+// BoolGenerator can be used to generate random bools and bits.
 type BoolGenerator struct {
 	sync.Mutex
 
-	src rand.Source
-	cache int64
+	src           rand.Source
+	cache         int64
 	remainingBits int
 }
 
-// The default implementation, which can be used.
+// Default is a generally-available BoolGenerator.
+// Use New to create a new BoolGenerator.
 var Default = New()
 
-// Gets the next bit in the specified BoolGenerator.
+// NextBit gets the next random bit.
 func (generator *BoolGenerator) NextBit() uint8 {
 	// concurrency safety
 	generator.Lock()
@@ -41,21 +42,21 @@ func (generator *BoolGenerator) NextBit() uint8 {
 	return result
 }
 
-// Gets the next boolean in the specified BoolGenerator.
-func (generator *BoolGenerator) NextBoolean() bool {
+// NextBool gets the next random boolean.
+func (generator *BoolGenerator) NextBool() bool {
 	return generator.NextBit() == 1
 }
 
-// Generates a new BoolGenerator using the given rand.Source.
+// NewFromSrc creates a new BoolGenerator from the given rand.Source.
 func NewFromSrc(src rand.Source) *BoolGenerator {
 	return &BoolGenerator{
-		src: src,
-		cache: src.Int63(),
+		src:           src,
+		cache:         src.Int63(),
 		remainingBits: 63,
 	}
 }
 
-// Generates a new BoolGenerator using a rand.Source from the current UNIX time.
+// New creates a new BoolGenerator using a new rand.Source using CryptoRandOrPanic as the seed.
 func New() *BoolGenerator {
 	return NewFromSrc(rand.NewSource(int64(CryptoRandOrPanic())))
 }
