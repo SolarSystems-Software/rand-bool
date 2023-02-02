@@ -10,7 +10,6 @@ import (
 // All generators are safe for concurrent usage.
 type BoolGenerator struct {
 	mu            sync.Mutex
-	src           rand.Source
 	cache         int64
 	remainingBits int
 }
@@ -25,7 +24,7 @@ func (generator *BoolGenerator) NextBit() uint8 {
 
 	// Reset if there's no bits left.
 	if generator.remainingBits == 0 {
-		generator.cache = generator.src.Int63()
+		generator.cache = rand.Int63()
 		generator.remainingBits = 63
 	}
 
