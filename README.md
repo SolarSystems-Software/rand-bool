@@ -2,24 +2,20 @@
 Generate bits and booleans easily.
 
 ## Usage
-These examples use a new generator, but the same generator should be used in real usages.
+This example uses the default generator, but you can always make your own generator.
 
 ### Generating random booleans
-```
-generator := randbool.New()
-randBoolean := randbool.NextBool(generator)
 
-if randBoolean {
-    // etc...
-}
-```
+```go
+package main
 
-### Generating random bits
-```
-generator := randbool.New()
-randBit := randbool.NextBit(generator)
+import randbool "github.com/SolarSystems-Software/rand-bool"
 
-if randBit == 1 {
-    // etc...
+func main() {
+	if randbool.Default.NextBool() {
+		// true
+    } else {
+		// false
+    }
 }
 ```
