@@ -16,9 +16,7 @@ type BoolGenerator struct {
 }
 
 // Default is the default BoolGenerator.
-//
-// Use New to create your own generator.
-var Default = New()
+var Default = BoolGenerator{}
 
 // NextBit gets the next random bit.
 func (generator *BoolGenerator) NextBit() uint8 {
@@ -46,18 +44,4 @@ func (generator *BoolGenerator) NextBit() uint8 {
 // NextBool gets the next random boolean.
 func (generator *BoolGenerator) NextBool() bool {
 	return generator.NextBit() == 1
-}
-
-// NewFromSrc creates a new BoolGenerator from the given rand.Source.
-func NewFromSrc(src rand.Source) *BoolGenerator {
-	return &BoolGenerator{
-		src:           src,
-		cache:         src.Int63(),
-		remainingBits: 63,
-	}
-}
-
-// New creates a new BoolGenerator using a new rand.Source using CryptoRandOrPanic as the seed.
-func New() *BoolGenerator {
-	return NewFromSrc(rand.NewSource(int64(CryptoRandOrPanic())))
 }
