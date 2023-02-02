@@ -18,7 +18,7 @@ type Generator struct {
 var Default = Generator{}
 
 // NextBit gets the next random bit.
-func (generator *Generator) NextBit() uint8 {
+func (generator *Generator) NextBit() byte {
 	generator.mu.Lock()
 	defer generator.mu.Unlock()
 
@@ -29,7 +29,7 @@ func (generator *Generator) NextBit() uint8 {
 	}
 
 	// The next bit
-	result := uint8(generator.cache & 0x01)
+	result := byte(generator.cache & 0x01)
 
 	// Shift over to the right by 1 for the next time this function is called
 	generator.cache >>= 1
