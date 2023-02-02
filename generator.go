@@ -5,20 +5,20 @@ import (
 	"sync"
 )
 
-// BoolGenerator is a generator capable of generating booleans and bits.
+// Generator is a generator capable of generating booleans and bits.
 //
 // All generators are safe for concurrent usage.
-type BoolGenerator struct {
+type Generator struct {
 	mu            sync.Mutex
 	cache         int64
 	remainingBits int
 }
 
-// Default is the default BoolGenerator.
-var Default = BoolGenerator{}
+// Default is the default Generator.
+var Default = Generator{}
 
 // NextBit gets the next random bit.
-func (generator *BoolGenerator) NextBit() uint8 {
+func (generator *Generator) NextBit() uint8 {
 	generator.mu.Lock()
 	defer generator.mu.Unlock()
 
@@ -41,6 +41,6 @@ func (generator *BoolGenerator) NextBit() uint8 {
 }
 
 // NextBool gets the next random boolean.
-func (generator *BoolGenerator) NextBool() bool {
+func (generator *Generator) NextBool() bool {
 	return generator.NextBit() == 1
 }
